@@ -97,7 +97,7 @@ class RegistrationController extends Controller
 			$root->save();
 			
 		} else {
-			//$message = 'Mapa postoji.';
+			//$message = 'Mapa postoji.'; - No point in this message since the map generation is random, but it's simply here
 			//Session::flash('error', $message);
 		}
         // Ask the user to check their email for the activation link

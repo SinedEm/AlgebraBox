@@ -13,9 +13,17 @@
 
 // Index page
 Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
-// Home page
-Route::get('home', ['as' => 'home', 'uses' => 'User\HomeController@index']);
 
+/*######### USER PAGE ##########*/
+Route::group(['prefix' => 'home'], function() {
+	// Home page
+	Route::get('/', ['as' => 'home', 'uses' => 'User\HomeController@index']);
+	// Directories page
+	Route::get('/{name}', ['as' => 'home.directories', 'uses' => 'User\HomeController@index']);
+	//Create new directory
+	Route::post('/', ['as' => 'directory.create', 'uses' => 'User\HomeController@create']);
+
+});
 // Authorization
 Route::get('login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
 Route::post('login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
