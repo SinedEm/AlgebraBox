@@ -46,9 +46,32 @@ class HomeController extends Controller
 		$dir_name = trim($request->get('dir_name'));
         if(!empty($dir_name)) {
 			Storage::disk('public')->makeDirectory($this->root_name.'/'.$dir_name);
+			session()->flash('success', "You've successfully created a new folder.");
 		}
 		return redirect()->route('home');
 	}
+	
+	public function show($name)
+	{
+		$this->setRoot();
+		$path = $this->root_name.'/'.$name;
+		$directories = Storage::disk('public')->directories($path);
+		$files = Storage::disk('public')->files($path);
+		
+		return view('user.home',['directories' => $directories, 'files' => $files]);
+		
+	}
+	
+	public function delete($name)
+	{
+		$this->setRoot();
+		
+		Storage::disk('public')->deleteDirectory($this->root_name.'/'.$name);
+		session()->flash('success', "You've successfully deleted a folder.");
+		
+		return redirect()->route('home');
+	}
+	
 	private function setRoot()
 	{
 		$this->user_id = Sentinel::getUser()->id;

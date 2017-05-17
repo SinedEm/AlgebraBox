@@ -5,7 +5,7 @@
 @section('content')
 <div class="row">
   <ol class="breadcrumb">
-    <li class="active"><a href="{{route('home')}}">Home</a></li>
+    <li class="active">Home</li>
   </ol>
 </div>
 <div class="row">
@@ -23,6 +23,10 @@
 			</tr>
 			@if($directories)
 				@foreach($directories as $directory)
+			@php
+				$dir_array = explode('/', $directory);
+				print_r($dir_array);
+			@endphp
 				<tr>
 					<td>
 						<a href="{{ route('home.directories', str_replace('/', '', strstr($directory, '/'))) }}"><b>
@@ -30,8 +34,7 @@
 						{{ ucfirst(str_replace('/', '', strstr($directory, '/'))) }}</b></a>
 					</td>
 					<td>
-					<a href="{{ route('directory.delete', 
-					str_replace('/', '', strstr($directory, '/'))) }}" 
+					<a href="{{ route('home.directories', $directory) }}" 
 					data-method="delete" 
 					data-token="{{csrf_token() }}" role="button" 
 					class="btn btn-danger btn-sm action_confirm">
