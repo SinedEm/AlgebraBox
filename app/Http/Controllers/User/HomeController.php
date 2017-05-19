@@ -46,19 +46,25 @@ class HomeController extends Controller
 		$dir_name = trim($request->get('dir_name'));
         if(!empty($dir_name)) {
 			Storage::disk('public')->makeDirectory($this->root_name.'/'.$dir_name);
-			session()->flash('success', "You've successfully created a new folder.");
+			session()->flash('success', "You've successfully created a new folder");
 		}
 		return redirect()->route('home');
 	}
 	
-	public function show($name)
+	public function show($name, $name1=null)
 	{
+		$bc = array($name);
+		
+		if($name1) {
+			$bc = array($name,$name1);
+		}
+		
 		$this->setRoot();
 		$path = $this->root_name.'/'.$name;
 		$directories = Storage::disk('public')->directories($path);
 		$files = Storage::disk('public')->files($path);
 		
-		return view('user.home',['directories' => $directories, 'files' => $files]);
+		return view('user.show',['directories' => $directories, 'files' => $files, 'bc' => $bc]);
 		
 	}
 	
@@ -67,7 +73,7 @@ class HomeController extends Controller
 		$this->setRoot();
 		
 		Storage::disk('public')->deleteDirectory($this->root_name.'/'.$name);
-		session()->flash('success', "You've successfully deleted a folder.");
+		session()->flash('success', "You've successfully deleted a folder");
 		
 		return redirect()->route('home');
 	}
@@ -81,4 +87,3 @@ class HomeController extends Controller
 		}
 	}
 }
-

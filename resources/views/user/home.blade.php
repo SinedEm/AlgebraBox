@@ -5,7 +5,7 @@
 @section('content')
 <div class="row">
   <ol class="breadcrumb">
-    <li class="active"><a href="{{route('home')}}">Home</a></li>
+    <li class="active">Home</li>
   </ol>
 </div>
 <div class="row">
@@ -30,14 +30,9 @@
 						{{ ucfirst(str_replace('/', '', strstr($directory, '/'))) }}</b></a>
 					</td>
 					<td>
-					<a href="{{ route('directory.delete', 
-					str_replace('/', '', strstr($directory, '/'))) }}" 
-					data-method="delete" 
-					data-token="{{csrf_token() }}" role="button" 
-					class="btn btn-danger btn-sm action_confirm">
-						<span class="glyphicon glyphicon-trash" aria-hidden="true">
-						</span>
-					</a>
+						<a href="{{ route('directory.delete', str_replace('/', '', strstr($directory, '/'))) }}" data-method="delete" data-token="{{ csrf_token() }}" role="button" class="btn btn-danger btn-sm action_confirm">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</a>
 					</td>
 				</tr>
 				@endforeach

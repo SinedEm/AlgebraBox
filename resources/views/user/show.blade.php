@@ -3,9 +3,16 @@
 @section('title', 'AlgebraBox | The greatest cloud storage')
 
 @section('content')
+
 <div class="row">
   <ol class="breadcrumb">
-    <li class="active">Home</li>
+    <li><a href="{{ route('home') }}">Home</a></li>
+	@php
+		$count = count($bc);
+	@endphp
+	@for ($i=0; $i < $count; $i++)
+		<li><a href="{{ route('home.directories', $bc[$i]) }}">{{ $bc[$i] }}</a></li>
+	@endfor
   </ol>
 </div>
 <div class="row">
@@ -23,24 +30,19 @@
 			</tr>
 			@if($directories)
 				@foreach($directories as $directory)
-			@php
-				$dir_array = explode('/', $directory);
-				print_r($dir_array);
-			@endphp
+				@php
+					$dir_array = explode('/', $directory);
+				@endphp
 				<tr>
 					<td>
-						<a href="{{ route('home.directories', str_replace('/', '', strstr($directory, '/'))) }}"><b>
+						<a href="{{ route('home.directory.directories', ['name' => $dir_array[1], 'name1' => end($dir_array)]) }}"><b>
 						<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span> &nbsp; 
-						{{ ucfirst(str_replace('/', '', strstr($directory, '/'))) }}</b></a>
+						{{ ucfirst(end($dir_array)) }}</b></a>
 					</td>
 					<td>
-					<a href="{{ route('home.directories', $directory) }}" 
-					data-method="delete" 
-					data-token="{{csrf_token() }}" role="button" 
-					class="btn btn-danger btn-sm action_confirm">
-						<span class="glyphicon glyphicon-trash" aria-hidden="true">
-						</span>
-					</a>
+						<a href="{{ route('directory.delete', str_replace('/', '', strstr($directory, '/'))) }}" data-method="delete" data-token="{{ csrf_token() }}" role="button" class="btn btn-danger btn-sm action_confirm">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</a>
 					</td>
 				</tr>
 				@endforeach

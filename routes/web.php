@@ -20,10 +20,13 @@ Route::group(['prefix' => 'home'], function() {
 	Route::get('/', ['as' => 'home', 'uses' => 'User\HomeController@index']);
 	// Directories page
 	Route::get('/{name}', ['as' => 'home.directories', 'uses' => 'User\HomeController@show']);
+	Route::get('/{name}/{name1}', ['as' => 'home.directory.directories', 'uses' => 'User\HomeController@show']);
 	//Create new directory
 	Route::post('/', ['as' => 'directory.create', 'uses' => 'User\HomeController@create']);
 	//Delete directory
 	Route::delete('/{name}', ['as' => 'directory.delete', 'uses' => 'User\HomeController@delete']);
+	//Delete file
+	//Route::delete('/{name2}', ['as' => 'file.delete', 'uses' => 'User\HomeController@deleteFile']);
 
 });
 // Authorization
